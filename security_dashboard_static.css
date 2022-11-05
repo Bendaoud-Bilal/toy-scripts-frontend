@@ -1,0 +1,377 @@
+/*
+ * Problem: Styles of the static security dashboard
+ * Stand-alone stylesheet extracted from the static security dashboard: reset,
+ * page layout and card styles.
+ * Context: Front-end practice exercise (reproducing a UI design with HTML/CSS)
+ */
+ * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 2% 1.5%;
+            color: #333;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5%;
+        }
+
+        .card {
+            background: white;
+            border-radius: 0.8%;
+            padding: 2.5%;
+            box-shadow: 0 0.15% 0.6% rgba(0, 0, 0, 0.08);
+        }
+
+        /* Security Score Section */
+        .security-score-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5%;
+            margin-bottom: 1.8%;
+        }
+
+        .shield-icon {
+            width: 1.2%;
+            height: auto;
+            aspect-ratio: 1;
+        }
+
+        .security-score-header h2 {
+            font-size: 1.1vw;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .score-display {
+            display: flex;
+            align-items: center;
+            gap: 0.8%;
+            margin-bottom: 1.5%;
+        }
+
+        .score-number {
+            font-size: 3.2vw;
+            font-weight: 700;
+            color: #E89C3C;
+        }
+
+        .score-badge {
+            width: 1.5%;
+            height: auto;
+            aspect-ratio: 1;
+            background: #FFF3E0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-badge svg {
+            width: 100%;
+            height: 100%;
+            fill: #E89C3C;
+        }
+
+        .score-label {
+            font-size: 0.9vw;
+            color: #666;
+            margin-left: 0.5%;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 0.8%;
+            background: #E0E0E0;
+            border-radius: 0.4%;
+            overflow: hidden;
+            margin-bottom: 1.8%;
+        }
+
+        .progress-fill {
+            width: 63%;
+            height: 100%;
+            background: #333;
+            border-radius: 0.4%;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5%;
+            text-align: center;
+        }
+
+        .metric {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3%;
+        }
+
+        .metric-number {
+            font-size: 2vw;
+            font-weight: 600;
+        }
+
+        .metric-label {
+            font-size: 0.85vw;
+            color: #666;
+        }
+
+        .metric.weak .metric-number {
+            color: #DC3545;
+        }
+
+        .metric.reused .metric-number {
+            color: #E89C3C;
+        }
+
+        /* Password Cards Grid */
+        .password-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1%;
+            height: 28%;
+        }
+
+        .password-card {
+            background: white;
+            border-radius: 0.8%;
+            padding: 1.8%;
+            box-shadow: 0 0.15% 0.6% rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 1.2%;
+        }
+
+        .password-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .password-card-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8%;
+        }
+
+        .icon-circle {
+            width: 2.5%;
+            height: auto;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .icon-circle.red {
+            background: #FFE5E5;
+        }
+
+        .icon-circle.yellow {
+            background: #FFF8E1;
+        }
+
+        .icon-circle.orange {
+            background: #FFF3E0;
+        }
+
+        .icon-circle.blue {
+            background: #E3F2FD;
+        }
+
+        .password-card-title {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3%;
+        }
+
+        .password-card-title h3 {
+            font-size: 0.85vw;
+            font-weight: 600;
+            color: #666;
+        }
+
+        .password-card-content {
+            display: flex;
+            align-items: center;
+            gap: 0.8%;
+        }
+
+        .password-count {
+            font-size: 2vw;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .badge {
+            padding: 0.3% 0.8%;
+            border-radius: 0.3%;
+            font-size: 0.75vw;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .badge.action-needed {
+            background: #DC3545;
+            color: white;
+        }
+
+        .badge.review {
+            color: #666;
+        }
+
+        .badge.update {
+            color: #666;
+        }
+
+        .eye-icon {
+            width: 1.2%;
+            height: auto;
+            color: #999;
+            margin-left: auto;
+        }
+
+        /* Data Breach Alerts */
+        .breach-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5%;
+        }
+
+        .breach-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5%;
+        }
+
+        .breach-title h2 {
+            font-size: 1.1vw;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .check-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5%;
+            color: #666;
+            font-size: 0.85vw;
+            cursor: pointer;
+        }
+
+        .check-button svg {
+            width: 1%;
+            height: auto;
+        }
+
+        .breach-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2%;
+        }
+
+        .breach-item {
+            border: 1px solid #E0E0E0;
+            border-radius: 0.6%;
+            padding: 1.5%;
+            display: flex;
+            gap: 1%;
+        }
+
+        .breach-icon {
+            width: 2.5%;
+            height: auto;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .breach-icon.red {
+            background: #FFE5E5;
+        }
+
+        .breach-icon.green {
+            background: #E8F5E9;
+        }
+
+        .breach-content {
+            flex: 1;
+        }
+
+        .breach-service {
+            display: flex;
+            align-items: center;
+            gap: 0.8%;
+            margin-bottom: 0.8%;
+        }
+
+        .breach-service h3 {
+            font-size: 1vw;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .badge.action-required {
+            background: #DC3545;
+            color: white;
+        }
+
+        .badge.resolved {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+
+        .breach-description {
+            font-size: 0.85vw;
+            color: #666;
+            margin-bottom: 0.6%;
+        }
+
+        .breach-details {
+            font-size: 0.8vw;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .password-cards {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .score-number {
+                font-size: 6vw;
+            }
+
+            .metric-number {
+                font-size: 4vw;
+            }
+
+            .password-count {
+                font-size: 4vw;
+            }
+        }

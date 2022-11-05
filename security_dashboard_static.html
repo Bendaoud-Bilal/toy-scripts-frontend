@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<!--
+  Problem: Security score dashboard (static page)
+  Recreate a security-score dashboard UI as a single static page: score gauge,
+  data-breach alerts and status cards, laid out with flexbox/grid and plain
+  CSS.
+  Context: Front-end practice exercise (reproducing a UI design with HTML/CSS)
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Security Score Dashboard — Adjusted</title>
+<style>
+    /* Reset */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Page */
+    body {
+        font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background: #fafafa;
+        color: #2e2e2e;
+        padding: 48px 28px;
+    }
+
+    /* Big centered container with the same left/right breathing room as in screenshot */
+    .container {
+        max-width: 1320px;
+        margin: 0 auto;
+    }
+
+    /* generic card */
+    .card {
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 8px 20px rgba(22, 22, 22, 0.06);
+        padding: 28px;
+        margin-bottom: 22px;
+        border: 1px solid rgba(20,20,20,0.03);
+    }
+
+    /* TOP SECURITY SCORE CARD: two column layout */
+    .score-card {
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        gap: 28px;
+        align-items: center;
+    }
+
+    /* left score column */
+    .score-left {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding-left: 4px;
+    }
+
+    .security-score-header {
+        display:flex;
+        align-items:center;
+        gap:10px;
+    }
+    .shield-icon {
+        width:22px; height:22px; color:#444;
+        flex-shrink:0;
+    }
+    .security-score-header h2 {
+        font-size:16px;
+        font-weight:600;
+        color:#333;
+    }
+
+    .score-number {
+        font-size:72px;
+        font-weight:800;
+        line-height:0.95;
+        color:#E8982F; /* warm yellow/orange */
+    }
+
+    .score-sub {
+        display:flex;
+        align-items:center;
+        gap:10px;
+        color:#777;
+        font-size:13px;
+    }
+    .score-badge {
+        width:28px; height:28px; border-radius:50%;
+        background:#FFF3E6; display:flex; align-items:center; justify-content:center;
+        box-shadow:0 1px 1px rgba(0,0,0,0.03);
+    }
+    .score-badge svg { width:16px; height:16px; fill:none; stroke:#E8982F; stroke-width:1.5; }
+
+    /* right column: progress + metrics */
+    .score-right { width:100%; }
+
+    .progress-wrap {
+        display:flex;
+        flex-direction:column;
+        gap:12px;
+        margin-bottom:10px;
+    }
+
+    .progress-line {
+        height:14px;
+        width:100%;
+        background:#ECECEC;
+        border-radius:10px;
+        overflow:hidden;
+        box-shadow: inset 0 -2px 6px rgba(0,0,0,0.04);
+    }
+    .progress-fill {
+        width:63%;
+        height:100%;
+        background: linear-gradient(90deg,#111217,#1a1a1f);
+        border-radius:10px;
+    }
+
+    .progress-caption { color:#888; font-size:13px; }
+
+    /* metrics row */
+    .metrics {
+        display:flex;
+        gap:22px;
+        margin-top:8px;
+    }
+    .metric {
+        background: transparent;
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+        justify-content:center;
+        min-width: 160px;
+    }
+    .metric-number { font-size:28px; font-weight:700; color:#333; }
+    .metric-label { font-size:13px; color:#7a7a7a; margin-top:6px; }
+
+    .metric.weak .metric-number { color:#e03e3e; }
+    .metric.reused .metric-number { color:#d98c30; }
+
+    /* Password cards row */
+    .password-cards {
+        display:grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap:18px;
+        margin: 10px 0 22px 0;
+    }
+
+    .password-card {
+        background:#fff;
+        border-radius:12px;
+        padding:16px 18px;
+        box-shadow: 0 6px 18px rgba(18,18,18,0.04);
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+        min-height:120px;
+        border: 1px solid rgba(0,0,0,0.03);
+    }
+
+    .password-card-header {
+        display:flex;
+        align-items:flex-start;
+        gap:10px;
+        justify-content:space-between;
+    }
+    .password-card-info { display:flex; align-items:center; gap:12px; }
+    .icon-circle {
+        width:46px; height:46px; border-radius:10px;
+        display:flex; align-items:center; justify-content:center;
+        flex-shrink:0;
+    }
+    .icon-circle.red { background:#FFEDEE; }
+    .icon-circle.yellow { background:#FFF6E8; }
+    .icon-circle.orange { background:#FFF4E6; }
+    .icon-circle.blue { background:#EAF5FF; }
+
+    .password-card-title h3 {
+        font-size:14px; color:#575757; font-weight:700;
+    }
+
+    .eye-icon { width:20px; height:20px; color:#b0b0b0; flex-shrink:0; }
+
+    .password-card-content {
+        display:flex;
+        align-items:center;
+        gap:12px;
+    }
+
+    .password-count { font-size:28px; font-weight:700; color:#333; min-width:44px; text-align:left; }
+    .badge {
+        padding:6px 12px;
+        border-radius:999px;
+        font-size:12px;
+        font-weight:700;
+        display:inline-block;
+    }
+    .badge.action-needed { background:#dc3545; color:#fff; }
+    .badge.review { background:#f2f2f4; color:#444; border:1px solid rgba(0,0,0,0.03); }
+    .badge.update { background:#f2f6fb; color:#214e9b; border:1px solid rgba(0,0,0,0.03); }
+
+    /* Data Breach Card specifics */
+    .breach-header {
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:12px;
+        margin-bottom:12px;
+    }
+    .breach-title { display:flex; align-items:center; gap:10px; }
+    .breach-title h2 { font-size:16px; font-weight:700; color:#333; }
+
+    .check-button { display:flex; align-items:center; gap:8px; color:#666; font-size:14px; cursor:pointer; }
+    .breach-list { display:flex; flex-direction:column; gap:14px; margin-top:6px; }
+
+    .breach-item {
+        display:flex;
+        gap:16px;
+        align-items:flex-start;
+        background:#fff;
+        border-radius:10px;
+        padding:18px;
+        border:1px solid #eee;
+        box-shadow: 0 6px 20px rgba(18,18,18,0.03);
+    }
+
+    .breach-icon { width:52px; height:52px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .breach-icon.red { background:#FFF1F2; }
+    .breach-icon.green { background:#EDF7EE; }
+
+    .breach-content { flex:1; }
+    .breach-service { display:flex; align-items:center; gap:12px; }
+    .breach-service h3 { font-size:16px; font-weight:800; color:#333; }
+    .badge.action-required { background:#dc3545; color:#fff; padding:6px 10px; border-radius:8px; font-size:12px; }
+    .badge.resolved { background:#e9f5ea; color:#2e7d32; padding:6px 10px; border-radius:8px; font-size:12px; }
+
+    .breach-description { color:#6f6f6f; font-size:14px; margin-top:8px; }
+    .breach-details { color:#9b9b9b; font-size:13px; margin-top:6px; }
+
+    /* Responsive */
+    @media (max-width: 1150px) {
+        .score-card { grid-template-columns: 190px 1fr; }
+        .password-cards { grid-template-columns: repeat(2, 1fr); }
+        .metrics { flex-wrap:wrap; gap:12px; }
+    }
+    @media (max-width: 760px) {
+        body { padding: 20px 14px; }
+        .score-card { grid-template-columns: 1fr; }
+        .password-cards { grid-template-columns: 1fr; }
+        .metrics { gap:16px; }
+        .score-left { align-items:flex-start; }
+        .score-number { font-size:56px; }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+
+    <!-- Security Score Card -->
+    <div class="card score-card">
+        <!-- left -->
+        <div class="score-left">
+            <div class="security-score-header">
+                <svg class="shield-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+                <h2>Security Score</h2>
+            </div>
+
+            <div class="score-number">63</div>
+
+            <div class="score-sub">
+                <div class="score-badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                </div>
+                <div>Good security</div>
+            </div>
+        </div>
+
+        <!-- right -->
+        <div class="score-right">
+            <div class="progress-wrap">
+                <div class="progress-line" aria-hidden="true">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="progress-caption">Overview of your account health</div>
+            </div>
+
+            <div class="metrics">
+                <div class="metric">
+                    <div class="metric-number">4</div>
+                    <div class="metric-label">Total Items</div>
+                </div>
+                <div class="metric weak">
+                    <div class="metric-number">1</div>
+                    <div class="metric-label">Weak</div>
+                </div>
+                <div class="metric reused">
+                    <div class="metric-number">1</div>
+                    <div class="metric-label">Reused</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-number">0</div>
+                    <div class="metric-label">Exposed</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Password Cards Row -->
+    <div class="password-cards">
+        <!-- Weak -->
+        <div class="password-card">
+            <div class="password-card-header">
+                <div class="password-card-info">
+                    <div class="icon-circle red">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="1.8">
+                            <circle cx="12" cy="12" r="9"></circle>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                        </svg>
+                    </div>
+                    <div class="password-card-title"><h3>Weak Passwords</h3></div>
+                </div>
+                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>
+                </svg>
+            </div>
+
+            <div class="password-card-content">
+                <div class="password-count">1</div>
+                <div class="badge action-needed">Action needed</div>
+            </div>
+        </div>
+
+        <!-- Reused -->
+        <div class="password-card">
+            <div class="password-card-header">
+                <div class="password-card-info">
+                    <div class="icon-circle yellow">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e89c3c" stroke-width="1.8">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                        </svg>
+                    </div>
+                    <div class="password-card-title"><h3>Reused Passwords</h3></div>
+                </div>
+                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>
+                </svg>
+            </div>
+
+            <div class="password-card-content">
+                <div class="password-count">1</div>
+                <div class="badge review">Review</div>
+            </div>
+        </div>
+
+        <!-- Exposed -->
+        <div class="password-card">
+            <div class="password-card-header">
+                <div class="password-card-info">
+                    <div class="icon-circle orange">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e89c3c" stroke-width="1.6">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <div class="password-card-title"><h3>Exposed Passwords</h3></div>
+                </div>
+                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>
+                </svg>
+            </div>
+
+            <div class="password-card-content">
+                <div class="password-count">0</div>
+            </div>
+        </div>
+
+        <!-- Old -->
+        <div class="password-card">
+            <div class="password-card-header">
+                <div class="password-card-info">
+                    <div class="icon-circle blue">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1976d2" stroke-width="1.6">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <div class="password-card-title"><h3>Old Passwords</h3></div>
+                </div>
+            </div>
+
+            <div class="password-card-content">
+                <div class="password-count">4</div>
+                <div class="badge update">Update</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Breach Alerts Card -->
+    <div class="card">
+        <div class="breach-header">
+            <div class="breach-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                </svg>
+                <h2>Data Breach Alerts</h2>
+            </div>
+
+            <div class="check-button">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <polyline points="23 4 23 10 17 10"></polyline>
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                </svg>
+                <div>Check for breaches</div>
+            </div>
+        </div>
+
+        <div class="breach-list">
+            <div class="breach-item">
+                <div class="breach-icon red">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="1.6">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                        <line x1="12" y1="9" x2="12" y2="13"></line>
+                    </svg>
+                </div>
+
+                <div class="breach-content">
+                    <div class="breach-service">
+                        <h3>LinkedIn</h3>
+                        <span class="badge action-required">Action Required</span>
+                    </div>
+                    <div class="breach-description">700 million user records exposed including emails and passwords</div>
+                    <div class="breach-details">Breach Date: 1/15/2024 • Affected: john.doe@gmail.com</div>
+                </div>
+            </div>
+
+            <div class="breach-item">
+                <div class="breach-icon green">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="1.6">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+
+                <div class="breach-content">
+                    <div class="breach-service">
+                        <h3>Adobe</h3>
+                        <span class="badge resolved">Resolved</span>
+                    </div>
+                    <div class="breach-description">Security breach affecting 38 million users</div>
+                    <div class="breach-details">Breach Date: 12/10/2023 • Affected: johndoe@work.com</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
