@@ -1,0 +1,27 @@
+<!--
+  Problem: Move a dot with the keyboard
+  Console experiment: read keys with _getch and move a character around the
+  screen using ANSI cursor-positioning escape codes.
+  Context: University tutorial / lab exercise (TD / TP)
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Move a dot with the keyboard</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { color: #333; }
+        .output { background: #f5f5f5; padding: 1rem; border-radius: 8px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <h1>Move a dot with the keyboard</h1>
+    <p>Console experiment: read keys with _getch and move a character around the screen using ANSI cursor-positioning escape codes.</p>
+    <div class="output" id="output"></div>
+    <script>
+        document.getElementById('output').textContent = 'Move a dot with the keyboard';
+    </script>
+</body>
+</html>
