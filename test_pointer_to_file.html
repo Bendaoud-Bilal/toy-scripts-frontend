@@ -1,0 +1,27 @@
+<!--
+  Problem: Two FILE pointers on the same file
+  Experiment: copy a FILE pointer into another variable and write through it,
+  to understand that both refer to the same open file.
+  Context: University tutorial / lab exercise (TD / TP)
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two FILE pointers on the same file</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { color: #333; }
+        .output { background: #f5f5f5; padding: 1rem; border-radius: 8px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <h1>Two FILE pointers on the same file</h1>
+    <p>Experiment: copy a FILE pointer into another variable and write through it, to understand that both refer to the same open file.</p>
+    <div class="output" id="output"></div>
+    <script>
+        document.getElementById('output').textContent = 'Two FILE pointers on the same file';
+    </script>
+</body>
+</html>
