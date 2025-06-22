@@ -1,0 +1,28 @@
+<!--
+  Problem: Arrow-key console menu (initial version)
+  First version of the project menu: three selectable options moved with the
+  arrow keys (system("cls"), getch), each option opens a sub-screen that Esc
+  closes.
+  Context: University tutorial / lab exercise (TD / TP)
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrow-key console menu (initial version)</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { color: #333; }
+        .output { background: #f5f5f5; padding: 1rem; border-radius: 8px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <h1>Arrow-key console menu (initial version)</h1>
+    <p>First version of the project menu: three selectable options moved with the arrow keys (system("cls"), getch), each option opens a sub-screen that Esc closes.</p>
+    <div class="output" id="output"></div>
+    <script>
+        document.getElementById('output').textContent = 'Arrow-key console menu (initial version)';
+    </script>
+</body>
+</html>
