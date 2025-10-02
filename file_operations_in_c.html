@@ -1,0 +1,27 @@
+<!--
+  Problem: Read and echo a text file
+  Open a text file in r+ mode and print its content character by character
+  until end of file; exit with an error if it cannot be opened.
+  Context: University tutorial / lab exercise (TD / TP)
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read and echo a text file</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { color: #333; }
+        .output { background: #f5f5f5; padding: 1rem; border-radius: 8px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <h1>Read and echo a text file</h1>
+    <p>Open a text file in r+ mode and print its content character by character until end of file; exit with an error if it cannot be opened.</p>
+    <div class="output" id="output"></div>
+    <script>
+        document.getElementById('output').textContent = 'Read and echo a text file';
+    </script>
+</body>
+</html>
